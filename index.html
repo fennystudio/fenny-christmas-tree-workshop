@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>毛根聖誕樹 DIY｜芬妮手作</title>
+<style>
+  :root {
+    --green: #3E7B5A;
+    --green-deep: #24533B;
+    --green-soft: #DCEBDF;
+    --green-light: #EEF5EF;
+    --red: #C8423B;
+    --red-soft: #F8E1DE;
+    --gold: #D9A94A;
+    --cream: #FBF6EE;
+    --ink: #2F2A26;
+    --ink-soft: #5B524B;
+    --ink-muted: #8C7E72;
+    --white-warm: #FFFDF9;
+    --line: #E6E0D2;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    font-family: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .deck { position: relative; width: 100vw; height: 100vh; height: 100dvh; overflow: hidden; }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 128px 7vw 11vh;
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity .55s ease, transform .55s ease;
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; }
+  .slide-inner { width: 100%; max-width: 1180px; margin: auto; }
+
+  .page-number {
+    position: absolute; top: 24px; right: 32px;
+    font-size: 12px; letter-spacing: 2px; color: var(--ink-muted); opacity: .7;
+  }
+
+  .chapter-tag {
+    display: inline-block;
+    padding: 5px 13px;
+    border-radius: 20px;
+    background: var(--green-soft);
+    color: var(--green-deep);
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+
+  h1.title {
+    font-size: clamp(30px, 4.6vw, 56px);
+    line-height: 1.3;
+    font-weight: 800;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+  }
+  h2.subtitle {
+    font-size: clamp(17px, 1.9vw, 24px);
+    line-height: 1.6;
+    color: var(--ink-soft);
+    font-weight: 500;
+    margin-bottom: 22px;
+  }
+
+  /* ============ COVER ============ */
+  .cover { background: linear-gradient(135deg, #3E7B5A 0%, #1F4733 100%); color: #fff; }
+  .cover .slide-inner { display: flex; align-items: center; gap: 5vw; flex-wrap: wrap; }
+  .cover-text { flex: 1 1 360px; }
+  .cover-grid {
+    flex: 0 0 auto;
+    width: min(440px, 48vh);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .cover-grid img {
+    width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block;
+    border-radius: 16px; box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+  }
+  .cover .chapter-tag { background: rgba(255,255,255,0.18); color: #fff; }
+  .cover h1.title { color: #fff; font-size: clamp(36px, 5.4vw, 64px); }
+  .cover .subtitle { color: rgba(255,255,255,0.94); }
+  .cover .author { margin-top: 28px; font-size: 15px; letter-spacing: 4px; opacity: .9; line-height: 1.9; }
+  .cover .page-number { color: rgba(255,255,255,.75); }
+  .cover .ribbon { height: 4px; width: 120px; border-radius: 4px; margin: 6px 0 22px;
+    background: repeating-linear-gradient(90deg, var(--red) 0 14px, #fff 14px 28px); }
+
+  /* ============ VIDEO GRIDS（沿用原簡報） ============ */
+  .video-grid { display: grid; gap: 16px; margin-top: 24px; }
+  .video-grid.col-5 { grid-template-columns: repeat(5, 1fr); }
+  .video-grid.col-4 { grid-template-columns: repeat(4, 1fr); }
+  .video-grid.compact { gap: 8px; }
+  .video-grid.compact .video-cell { border-radius: 10px; }
+  .video-cell {
+    position: relative; aspect-ratio: 1/1; border-radius: 16px; overflow: hidden;
+    background: var(--green-soft); box-shadow: 0 6px 20px rgba(36, 83, 59, 0.12);
+  }
+  .video-cell video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ============ 四款聖誕樹 ============ */
+  .tree-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 24px; }
+  .tree-card {
+    background: var(--white-warm); border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+    box-shadow: 0 6px 20px rgba(36, 83, 59, 0.08);
+  }
+  .tree-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; max-height: 52vh; }
+  .tree-card .tree-label { text-align: center; padding: 10px 0 12px; font-size: 15px; font-weight: 600; color: var(--green-deep); letter-spacing: 1px; }
+
+  /* ============ 步驟總覽（可點） ============ */
+  .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 26px; }
+  .step-card {
+    display: flex; align-items: center; gap: 16px;
+    background: var(--white-warm); border: 1px solid var(--line); border-radius: 16px;
+    padding: 20px 20px; text-decoration: none; color: var(--ink);
+    box-shadow: 0 4px 16px rgba(36, 83, 59, 0.06);
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    cursor: pointer;
+  }
+  .step-card:hover, .step-card:focus-visible { transform: translateY(-3px); border-color: var(--green); box-shadow: 0 10px 26px rgba(36, 83, 59, 0.16); outline: none; }
+  .step-card .emoji { font-size: 34px; flex-shrink: 0; }
+  .step-card .step-no { font-size: 12px; letter-spacing: 2px; color: var(--red); font-weight: 700; }
+  .step-card .step-name { font-size: clamp(16px, 1.4vw, 19px); font-weight: 700; margin-top: 2px; }
+  .step-card .go { margin-left: auto; color: var(--green); font-size: 20px; }
+  .tap-hint { margin-top: 22px; text-align: center; color: var(--ink-muted); font-size: 14px; letter-spacing: 1px; }
+
+  /* ============ 單一步驟頁 ============ */
+  .step-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 4vw; align-items: center; }
+  .step-media {
+    width: 100%; max-width: 400px; justify-self: center;
+    aspect-ratio: 9/16; max-height: min(70vh, calc(100dvh - 230px));
+    border-radius: 20px; overflow: hidden;
+    background: var(--green-light);
+    box-shadow: 0 12px 40px rgba(36, 83, 59, 0.14);
+  }
+  .step-media video, .step-media img { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
+  .step-media img { background: transparent; }
+  .media-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+    border: 2px dashed #B9CFBF; border-radius: 20px;
+    color: var(--green-deep); text-align: center; padding: 20px;
+  }
+  .media-placeholder .ph-icon { font-size: 44px; opacity: .8; }
+  .media-placeholder .ph-text { font-size: 15px; line-height: 1.7; opacity: .8; }
+  .step-media.is-grid { background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }
+  .media-grid { height: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-content: center; }
+  .media-grid img { width: 100%; height: auto; aspect-ratio: 2/3; object-fit: cover; border-radius: 14px; box-shadow: 0 8px 22px rgba(36, 83, 59, 0.14); }
+  .media-multi { display: flex; flex-direction: column; gap: 8px; height: 100%; overflow-y: auto; }
+  .media-multi > * { flex-shrink: 0; height: auto; aspect-ratio: 9/16; }
+
+  .step-head { display: flex; align-items: center; gap: 14px; margin-bottom: 8px; }
+  .step-badge {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800; flex-shrink: 0;
+  }
+  .step-text h1.title { margin-bottom: 0; font-size: clamp(26px, 3.4vw, 42px); }
+  .step-list { list-style: none; margin-top: 22px; display: flex; flex-direction: column; gap: 12px; counter-reset: sub; }
+  .step-list li {
+    counter-increment: sub;
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--white-warm); border: 1px solid var(--line);
+    padding: 14px 18px; border-radius: 14px;
+    font-size: clamp(16px, 1.4vw, 19px); line-height: 1.7; color: var(--ink);
+  }
+  .step-list li::before {
+    content: counter(sub);
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--green); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; font-size: 14px; font-weight: 700; margin-top: 2px;
+  }
+  .step-list.single li::before { content: "✓"; }
+  .step-tip {
+    margin-top: 16px; padding: 14px 18px; border-radius: 12px;
+    background: var(--red-soft); color: #9E2F29; font-weight: 600;
+    font-size: clamp(15px, 1.3vw, 18px); line-height: 1.7;
+  }
+  .step-nav {
+    margin-top: 26px; padding: 18px 20px;
+    border: 1px solid var(--line); border-radius: 18px; background: transparent;
+    display: grid; grid-template-columns: auto auto; justify-content: space-between; row-gap: 14px;
+  }
+  .step-nav .nav-all { grid-column: 1 / -1; justify-self: start; }
+  .step-nav .nav-prev { justify-self: start; }
+  .step-nav .nav-next { grid-column: 2; justify-self: end; }
+  .step-nav .nav-prev[hidden] { display: block; visibility: hidden; }
+  .step-nav button {
+    border: 1px solid var(--line); background: transparent; color: var(--green-deep);
+    padding: 10px 18px; border-radius: 24px; font-size: 15px; font-weight: 600; cursor: pointer;
+    font-family: inherit;
+  }
+  .step-nav button.primary { background: var(--green); color: #fff; border-color: var(--green); }
+  .step-nav button:hover { border-color: var(--green); }
+  .step-nav button:disabled { opacity: .4; cursor: not-allowed; }
+
+  /* ============ FINAL ============ */
+  .final { background: linear-gradient(160deg, var(--green-soft) 0%, var(--cream) 100%); }
+  .final-emoji { font-size: clamp(44px, 6vh, 64px); text-align: center; margin-bottom: 8px; }
+  .final-msg { text-align: center; font-size: clamp(16px, 1.5vw, 21px); line-height: 1.9; color: var(--ink); max-width: 720px; margin: 0 auto; }
+  .qr-intro { text-align: center; margin: 22px auto 0; font-size: clamp(14px, 1.2vw, 17px); color: var(--ink-soft); max-width: 640px; line-height: 1.7; }
+  .qr-row { display: flex; gap: 20px; justify-content: center; margin-top: 16px; }
+  .qr-card {
+    background: var(--white-warm); border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+    display: flex; flex-direction: column; align-items: center; gap: 6px; width: 190px;
+  }
+  .qr-card .qr-img { width: min(150px, 16vh); height: min(150px, 16vh); object-fit: contain; display: block; border-radius: 8px; background: #fff; }
+  .qr-card .qr-name { font-size: 16px; color: var(--ink); font-weight: 700; }
+  .qr-card .qr-sub { font-size: 12px; color: var(--ink-muted); }
+  .final-msg strong { color: var(--red); }
+
+  /* ============ QR（每頁左上角） ============ */
+  .qr-badge {
+    position: fixed; top: 14px; left: 14px; z-index: 101;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    background: #fff; padding: 6px 6px 4px; border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12); text-decoration: none;
+  }
+  .qr-badge img { width: 92px; height: 92px; display: block; image-rendering: pixelated; }
+  .qr-badge span { font-size: 11px; color: var(--green-deep); letter-spacing: 1px; font-weight: 600; }
+
+  /* ============ CONTROLS ============ */
+  .controls {
+    position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 12px; align-items: center;
+    background: rgba(255, 253, 249, 0.92); backdrop-filter: blur(8px);
+    padding: 8px 16px; border-radius: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); z-index: 100;
+  }
+  .ctrl-btn {
+    width: 34px; height: 34px; border-radius: 50%; border: none;
+    background: var(--green); color: #fff; font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s, transform .2s;
+  }
+  .ctrl-btn:hover { background: var(--green-deep); transform: scale(1.06); }
+  .ctrl-btn:disabled { background: #cfd8cf; cursor: not-allowed; transform: none; }
+  .progress { font-size: 13px; color: var(--ink-soft); letter-spacing: 2px; min-width: 56px; text-align: center; }
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: var(--red); transition: width .4s ease; z-index: 99; }
+
+  @media (max-width: 900px) {
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .tree-gallery { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 760px) {
+    .slide { padding: 104px 16px 12vh; align-items: flex-start; }
+    .qr-badge { top: 10px; left: 10px; padding: 5px 5px 3px; }
+    .qr-badge img { width: 64px; height: 64px; }
+    .qr-badge span { font-size: 10px; }
+    .page-number { top: 14px; right: 16px; }
+    .video-grid.col-5 { grid-template-columns: repeat(3, 1fr); }
+    .video-grid.col-4 { grid-template-columns: 1fr 1fr; }
+    .cover .slide-inner { flex-direction: column; align-items: stretch; }
+    .cover-grid { width: 100%; max-width: 300px; margin: 0 auto; gap: 8px; }
+    .steps-grid { grid-template-columns: 1fr; gap: 10px; }
+    .step-card { padding: 14px 16px; }
+    .step-layout { grid-template-columns: 1fr; gap: 20px; }
+    .step-media { max-width: 300px; max-height: 56vh; }
+    .tree-card img { max-height: none; }
+    .qr-row { gap: 8px; }
+    .qr-card { width: auto; flex: 1 1 0; padding: 8px; border-radius: 12px; }
+    .qr-card .qr-img { width: 100%; height: auto; aspect-ratio: 1/1; }
+    .qr-card .qr-name { font-size: 13px; }
+    .qr-card .qr-sub { font-size: 10px; text-align: center; word-break: break-all; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar" style="width:0%"></div>
+
+<!-- 每頁左上角的 QR：網址改了要重產 images/qr-deck.png -->
+<a class="qr-badge" href="https://fennystudio.github.io/fenny-christmas-tree-workshop/" target="_blank" rel="noopener">
+  <img src="images/qr-deck.png" alt="掃描開啟這份簡報">
+  <span>掃我看步驟</span>
+</a>
+
+<div class="deck" id="deck">
+
+  <!-- ========== 封面 ========== -->
+  <section class="slide cover active" data-id="cover">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <div class="cover-text">
+        <span class="chapter-tag">FENNY STUDIO ✕ CHRISTMAS WORKSHOP</span>
+        <h1 class="title">毛根聖誕樹<br>DIY 手作</h1>
+        <div class="ribbon"></div>
+        <h2 class="subtitle">今天，我們一起做一棵聖誕樹 🎄</h2>
+        <div class="author">講者　Sally　莎莉老師</div>
+      </div>
+      <div class="cover-grid">
+        <img src="images/tree-gradient-green.webp" alt="漸層綠聖誕樹">
+        <img src="images/tree-classic-green.webp" alt="經典綠聖誕樹">
+        <img src="images/tree-pink-purple.webp" alt="粉紫聖誕樹">
+        <img src="images/tree-rainbow.webp" alt="彩虹聖誕樹">
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 一根毛根（原簡報第 12 頁的 15 支影片） ========== -->
+  <section class="slide" data-id="pipe-cleaner">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <span class="chapter-tag">先看看</span>
+      <h1 class="title">一根毛根，能變成什麼樣子？</h1>
+      <h2 class="subtitle">同一根材料，可以變出很多樣子。</h2>
+      <div class="video-grid col-5 compact">
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/5.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/6.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/7.MOV" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/8.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/9.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/10.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/13.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/15.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/16.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/17.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/18.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0043.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0094.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0628.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_1099.mov" type="video/mp4"></video></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 今天的作品 ========== -->
+  <section class="slide" data-id="today">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <span class="chapter-tag">今天的作品</span>
+      <h1 class="title">毛根聖誕樹 🎄</h1>
+      <h2 class="subtitle">同一個做法，不同繽紛的顏色，都很有聖誕氣息！</h2>
+      <div class="tree-gallery">
+        <div class="tree-card"><img src="images/tree-gradient-green.webp" alt="漸層綠聖誕樹" loading="lazy"><div class="tree-label">漸層綠</div></div>
+        <div class="tree-card"><img src="images/tree-classic-green.webp" alt="經典綠聖誕樹" loading="lazy"><div class="tree-label">經典綠</div></div>
+        <div class="tree-card"><img src="images/tree-pink-purple.webp" alt="粉紫聖誕樹" loading="lazy"><div class="tree-label">粉紫</div></div>
+        <div class="tree-card"><img src="images/tree-rainbow.webp" alt="彩虹聖誕樹" loading="lazy"><div class="tree-label">彩虹</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟總覽（點了跳到該步驟） ========== -->
+  <section class="slide" data-id="steps">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <span class="chapter-tag">動手做</span>
+      <h1 class="title">🎄 毛根聖誕樹 DIY｜製作步驟</h1>
+      <div class="steps-grid">
+        <a class="step-card" href="#step-1"><span class="emoji">✂️</span><span><div class="step-no">步驟 1</div><div class="step-name">剪下聖誕樹圓錐</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-2"><span class="emoji">🌿</span><span><div class="step-no">步驟 2</div><div class="step-name">製作聖誕樹葉片</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-3"><span class="emoji">🌲</span><span><div class="step-no">步驟 3</div><div class="step-name">黏貼聖誕樹葉片</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-4"><span class="emoji">🪵</span><span><div class="step-no">步驟 4</div><div class="step-name">纏繞樹幹</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-5"><span class="emoji">⭐</span><span><div class="step-no">步驟 5</div><div class="step-name">固定聖誕樹</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-6"><span class="emoji">🎀</span><span><div class="step-no">步驟 6</div><div class="step-name">裝飾聖誕樹</div></span><span class="go">›</span></a>
+      </div>
+      <p class="tap-hint">👆 點任何一個步驟，就能看那一步的照片／影片</p>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 1 ========== -->
+  <section class="slide" data-id="step-1" data-step="1">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="1"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">1</div><h1 class="title">✂️ 剪下聖誕樹圓錐</h1></div>
+        <ul class="step-list single">
+          <li>沿著線條剪下紙板模型，在黏貼處貼上雙面膠，捲成圓錐形並固定。</li>
+        </ul>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 2 ========== -->
+  <section class="slide" data-id="step-2" data-step="2">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="2"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">2</div><h1 class="title">🌿 製作聖誕樹葉片</h1></div>
+        <ol class="step-list">
+          <li>取一根毛根，每隔 6 公分來回折疊。</li>
+          <li>將每段 6 公分的毛根再對摺。</li>
+          <li>一根毛根可以做出 5 片葉片！</li>
+        </ol>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 3 ========== -->
+  <section class="slide" data-id="step-3" data-step="3">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="3"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">3</div><h1 class="title">🌲 黏貼聖誕樹葉片</h1></div>
+        <ol class="step-list">
+          <li>剪取約 2.5 公分的雙面膠，貼在紙板上。</li>
+          <li>從最下方開始，一圈一圈往上黏貼葉片。</li>
+          <li>每完成一圈，使用熱熔膠固定葉片上緣。</li>
+        </ol>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 4 ========== -->
+  <section class="slide" data-id="step-4" data-step="4">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="4"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">4</div><h1 class="title">🪵 纏繞樹幹</h1></div>
+        <ol class="step-list">
+          <li>將吸管剪成約 15 公分長。</li>
+          <li>用咖啡色毛根纏繞吸管。</li>
+          <li>第一圈記得用熱熔膠固定，中間可搭配雙面膠。</li>
+        </ol>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 5 ========== -->
+  <section class="slide" data-id="step-5" data-step="5">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="5"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">5</div><h1 class="title">⭐ 固定聖誕樹</h1></div>
+        <ul class="step-list single">
+          <li>使用熱熔膠，將樹幹固定在木片底座上。</li>
+        </ul>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 步驟 6 ========== -->
+  <section class="slide" data-id="step-6" data-step="6">
+    <div class="page-number"></div>
+    <div class="slide-inner step-layout">
+      <div class="step-media" data-step-media="6"></div>
+      <div class="step-text">
+        <div class="step-head"><div class="step-badge">6</div><h1 class="title">🎀 裝飾聖誕樹</h1></div>
+        <ol class="step-list">
+          <li>使用珍珠、聖誕小裝飾及蝴蝶結，自由裝飾聖誕樹。</li>
+          <li>最後再繞上燈串。</li>
+        </ol>
+        <div class="step-tip">想要更多顏色？ 可以到櫃子前方領取彩色毛球，讓聖誕樹更繽紛！</div>
+        <div class="step-nav"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 結尾 ========== -->
+  <section class="slide final" data-id="end">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <h1 class="title" style="text-align:center;">🎄 帶走一棵屬於你的聖誕樹</h1>
+      <div class="final-msg">
+        每一棵都是你親手做出來的，跟別人的都不一樣。<br>
+        <strong>聖誕快樂！</strong> 🎁
+      </div>
+      <p class="qr-intro">想預約課程、訂製作品，或想多認識芬妮手作，歡迎掃QRcode追蹤・聯絡我們 🤍</p>
+      <div class="qr-row">
+        <div class="qr-card"><img class="qr-img" src="images/qr-ig.jpeg" alt="Instagram QR"><span class="qr-name">📷 Instagram</span><span class="qr-sub">@fenny.studio</span></div>
+        <div class="qr-card"><img class="qr-img" src="images/qr-line.jpeg" alt="LINE QR"><span class="qr-name">💬 LINE</span><span class="qr-sub">加好友</span></div>
+        <div class="qr-card"><img class="qr-img" src="images/qr-store.png" alt="線上商店 QR"><span class="qr-name">🛒 線上商店</span><span class="qr-sub">flowers.fenny-studio.com</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="controls">
+  <button class="ctrl-btn" id="prevBtn" aria-label="上一頁">‹</button>
+  <div class="progress" id="progress">1</div>
+  <button class="ctrl-btn" id="nextBtn" aria-label="下一頁">›</button>
+</div>
+
+<script>
+  /* =========================================================
+     每一步的照片／影片放這裡（檔案先放進 steps/ 資料夾）
+     - 填一個：'steps/step1.mp4' 或 'steps/step1.jpg'
+     - 填多個：['steps/step2-a.jpg', 'steps/step2-b.mp4']
+     - 留空 ''：顯示「照片／影片待放」的預留框
+     ========================================================= */
+  const STEP_MEDIA = {
+    1: 'steps/step1-cut-cone.mp4',      // 聖誕蓬蓬老公公一分鐘版（v4-sally改）6.2–8.5 秒：剪紙板、捲圓錐；720 寬、無聲
+    2: 'steps/step2-fold-leaves.mp4',   // Sally 剪的 30 秒版（X9：20261030聖誕蓬蓬老公公DIY/聖誕團體教學簡報用/），720 寬 H.264 輕量版、無聲
+    3: 'steps/step3-glue-leaves.mp4',   // Sally 剪的 17.6 秒版（X9：20261030聖誕蓬蓬老公公DIY/聖誕團體教學簡報用/），720 寬 H.264 輕量版、無聲
+    4: 'steps/step4-wrap-trunk.mp4',    // Sally 剪的 31.5 秒版（X9：...聖誕團體教學簡報用/），720 寬 H.264 輕量版、無聲
+    5: 'steps/step5-fix-tree.mp4',      // Sally 剪的 15.4 秒版（X9：...聖誕團體教學簡報用/），720 寬 H.264 輕量版、無聲
+    6: 'steps/step6-decorate.mp4',      // Sally 剪的 21.3 秒版（X9：...聖誕團體教學簡報用/），720 寬 H.264 輕量版、無聲
+  };
+
+  const VIDEO_EXT = /\.(mp4|mov|m4v|webm)$/i;
+
+  function mediaEl(src, step) {
+    if (VIDEO_EXT.test(src)) {
+      const v = document.createElement('video');
+      v.controls = true;
+      v.muted = true;            // 教室裡大家同時點開會很吵，一律靜音（影片檔本身也已拿掉聲音）
+      v.defaultMuted = true;
+      v.setAttribute('muted', '');
+      v.playsInline = true;
+      v.preload = 'metadata';
+      v.className = 'no-autoplay';
+      v.src = src;
+      // 很短的片段（< 8 秒）像 GIF 一樣自動循環，不用學員按播放
+      v.addEventListener('loadedmetadata', () => {
+        if (v.duration < 8) {
+          v.loop = true;
+          v.controls = false;
+          v.classList.remove('no-autoplay');
+          if (v.closest('.slide')?.classList.contains('active')) v.play().catch(() => {});
+        }
+      });
+      return v;
+    }
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = `步驟 ${step}`;
+    img.loading = 'lazy';
+    return img;
+  }
+
+  document.querySelectorAll('[data-step-media]').forEach(box => {
+    const step = box.dataset.stepMedia;
+    const raw = STEP_MEDIA[step];
+    const list = (Array.isArray(raw) ? raw : [raw]).filter(Boolean);
+    if (list.length === 0) {
+      box.innerHTML = `<div class="media-placeholder"><div class="ph-icon">📷</div><div class="ph-text">步驟 ${step} 的照片／影片<br>之後放這裡</div></div>`;
+    } else if (list.length === 1) {
+      box.appendChild(mediaEl(list[0], step));
+    } else if (list.length === 4 && !list.some(src => VIDEO_EXT.test(src))) {
+      box.classList.add('is-grid');
+      const grid = document.createElement('div');
+      grid.className = 'media-grid';
+      list.forEach(src => grid.appendChild(mediaEl(src, step)));
+      box.appendChild(grid);
+    } else {
+      const wrap = document.createElement('div');
+      wrap.className = 'media-multi';
+      list.forEach(src => wrap.appendChild(mediaEl(src, step)));
+      box.appendChild(wrap);
+    }
+  });
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const progress = document.getElementById('progress');
+  const progressBar = document.getElementById('progressBar');
+  const indexOfId = id => slides.findIndex(s => s.dataset.id === id);
+  let current = 0;
+
+  slides.forEach((s, i) => {
+    const pn = s.querySelector('.page-number');
+    if (pn) pn.textContent = `${String(i+1).padStart(2,'0')} / ${String(total).padStart(2,'0')}`;
+  });
+
+  // 每個步驟頁底下的「上一步／步驟總覽／下一步」
+  const stepCount = document.querySelectorAll('[data-step]').length;
+  document.querySelectorAll('[data-step]').forEach(s => {
+    const n = Number(s.dataset.step);
+    const nav = s.querySelector('.step-nav');
+    const all = document.createElement('button');
+    all.className = 'nav-all';
+    all.textContent = '☷ 步驟總覽';
+    all.onclick = () => go('steps');
+    const prev = document.createElement('button');
+    prev.className = 'nav-prev';
+    prev.textContent = '‹ 上一步';
+    prev.hidden = n === 1;
+    prev.onclick = () => go(`step-${n - 1}`);
+    const next = document.createElement('button');
+    next.className = 'nav-next primary';
+    next.textContent = n === stepCount ? '完成 🎉' : '下一步 ›';
+    next.onclick = () => go(n === stepCount ? 'end' : `step-${n + 1}`);
+    nav.append(all, prev, next);
+  });
+
+  function updateVideos() {
+    slides.forEach((slide, idx) => {
+      slide.querySelectorAll('video').forEach(v => {
+        const noAuto = v.classList.contains('no-autoplay');
+        if (idx === current && !noAuto) {
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+          if (!noAuto) { try { v.currentTime = 0; } catch (e) {} }
+        }
+      });
+    });
+  }
+
+  function show(i) {
+    current = Math.max(0, Math.min(total - 1, i));
+    slides.forEach((s, idx) => s.classList.toggle('active', idx === current));
+    slides[current].scrollTop = 0;
+    progress.textContent = `${current + 1} / ${total}`;
+    progressBar.style.width = `${((current + 1) / total) * 100}%`;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === total - 1;
+    const id = slides[current].dataset.id;
+    if (id && location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    updateVideos();
+  }
+
+  function go(id) {
+    const i = indexOfId(id);
+    if (i >= 0) show(i);
+  }
+
+  // 總覽卡片與網址 #step-3 這類連結都會直接跳到該頁
+  document.querySelectorAll('a.step-card').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); go(a.getAttribute('href').slice(1)); });
+  });
+  window.addEventListener('hashchange', () => go(location.hash.slice(1)));
+
+  prevBtn.addEventListener('click', () => show(current - 1));
+  nextBtn.addEventListener('click', () => show(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'VIDEO') return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(total - 1);
+  });
+
+  let touchStartX = 0, touchStartY = 0;
+  document.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY; }, {passive: true});
+  document.addEventListener('touchend', (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
+  });
+
+  const startIdx = indexOfId(location.hash.slice(1));
+  show(startIdx >= 0 ? startIdx : 0);
+</script>
+
+</body>
+</html>
