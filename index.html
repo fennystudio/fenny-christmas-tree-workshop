@@ -237,8 +237,36 @@
     background: #fff; padding: 6px 6px 4px; border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.12); text-decoration: none;
   }
+  .qr-badge { border: none; cursor: zoom-in; font: inherit; }
   .qr-badge img { width: 92px; height: 92px; display: block; image-rendering: pixelated; }
   .qr-badge span { font-size: 11px; color: var(--green-deep); letter-spacing: 1px; font-weight: 600; }
+
+  /* 全螢幕放大 QR */
+  .qr-overlay {
+    position: fixed; inset: 0; z-index: 200; cursor: zoom-out;
+    background: rgba(20, 45, 32, 0.92);
+    display: flex; align-items: center; justify-content: center; padding: 3vh 16px;
+  }
+  .qr-overlay[hidden] { display: none; }
+  .qr-overlay-card {
+    background: #fff; border-radius: 24px; padding: 2.5vh 2.5vh 2vh;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2vh;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .qr-overlay-card img { width: min(76vh, 86vw); height: auto; aspect-ratio: 1/1; display: block; }
+  .qr-overlay-text { font-size: clamp(18px, 3.6vh, 34px); font-weight: 700; color: var(--green-deep); letter-spacing: 2px; }
+  .qr-overlay-hint { font-size: 13px; color: var(--ink-soft); letter-spacing: 1px; }
+
+  /* 封面的大 QR（封面時左上小 QR 收起來，避免兩個） */
+  .cover-qr {
+    margin-top: 3vh; display: inline-flex; align-items: center; gap: 18px;
+    background: #fff; color: var(--green-deep); border-radius: 18px; padding: 12px 22px 12px 12px;
+    box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+  }
+  .cover-qr img { width: clamp(150px, 30vh, 330px); height: auto; aspect-ratio: 1/1; display: block; }
+  .cover-qr-text { font-size: clamp(16px, 2.6vh, 26px); line-height: 1.6; letter-spacing: 2px; }
+  .cover-qr-text strong { display: block; font-size: 1.15em; }
+  body.on-cover .qr-badge { display: none; }
 
   /* ============ CONTROLS ============ */
   .controls {
@@ -272,6 +300,8 @@
     .video-grid.col-4 { grid-template-columns: 1fr 1fr; }
     .cover .slide-inner { flex-direction: column; align-items: stretch; }
     .cover-grid { width: 100%; max-width: 300px; margin: 0 auto; gap: 8px; }
+    .cover-qr { display: none; }
+    body.on-cover .qr-badge { display: flex; }
     .steps-grid { grid-template-columns: 1fr; gap: 10px; }
     .step-card { padding: 14px 16px; }
     .step-layout { grid-template-columns: 1fr; gap: 20px; }
@@ -290,10 +320,19 @@
 <div class="progress-bar" id="progressBar" style="width:0%"></div>
 
 <!-- 每頁左上角的 QR：網址改了要重產 images/qr-deck.png -->
-<a class="qr-badge" href="https://fennystudio.github.io/fenny-christmas-tree-workshop/" target="_blank" rel="noopener">
+<button type="button" class="qr-badge" id="qrBadge" aria-label="放大 QRcode">
   <img src="images/qr-deck.png" alt="掃描開啟這份簡報">
   <span>掃我看步驟</span>
-</a>
+</button>
+
+<!-- 點左上 QR 後的全螢幕放大版；點任意處或按 Esc 關閉 -->
+<div class="qr-overlay" id="qrOverlay" role="dialog" aria-modal="true" aria-label="簡報 QRcode" hidden>
+  <div class="qr-overlay-card">
+    <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
+    <div class="qr-overlay-text">手機掃 QRcode，跟著每一步做 🎄</div>
+    <div class="qr-overlay-hint">點任意處關閉</div>
+  </div>
+</div>
 
 <div class="deck" id="deck">
 
@@ -307,6 +346,10 @@
         <div class="ribbon"></div>
         <h2 class="subtitle">今天，我們一起做一棵聖誕樹 🎄</h2>
         <div class="author">講者　Sally　莎莉老師</div>
+        <div class="cover-qr">
+          <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
+          <div class="cover-qr-text"><strong>手機掃 QRcode</strong>跟著每一步做</div>
+        </div>
       </div>
       <div class="cover-grid">
         <img src="images/tree-gradient-green.webp" alt="漸層綠聖誕樹">
@@ -630,6 +673,7 @@
     nextBtn.disabled = current === total - 1;
     const id = slides[current].dataset.id;
     if (id && location.hash !== '#' + id) history.replaceState(null, '', '#' + id);
+    document.body.classList.toggle('on-cover', id === 'cover');
     updateVideos();
   }
 
@@ -647,7 +691,14 @@
   prevBtn.addEventListener('click', () => show(current - 1));
   nextBtn.addEventListener('click', () => show(current + 1));
 
+  // 左上 QR：點一下全螢幕放大，再點任意處或 Esc 關閉
+  const qrOverlay = document.getElementById('qrOverlay');
+  const qrOpen = () => !qrOverlay.hidden;
+  document.getElementById('qrBadge').addEventListener('click', () => { qrOverlay.hidden = false; });
+  qrOverlay.addEventListener('click', () => { qrOverlay.hidden = true; });
+
   document.addEventListener('keydown', (e) => {
+    if (qrOpen()) { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); qrOverlay.hidden = true; } return; }
     if (e.target.tagName === 'VIDEO') return;
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); show(current - 1); }
@@ -660,6 +711,7 @@
   document.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
+    if (qrOpen()) return;
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
   });
 
