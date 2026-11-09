@@ -135,6 +135,7 @@
     display: flex; align-items: center; gap: 8px; padding: 10px 12px;
     background: var(--green); color: #fff; font-weight: 700;
     font-size: clamp(14px, 1.5vh, 20px); letter-spacing: 1px;
+    min-height: 5.2em; box-sizing: border-box;  /* 讓六格 header 等高，字少的那格不會在下方留白 */
   }
   .loop-cell .loop-badge {
     width: 28px; height: 28px; border-radius: 50%; background: #fff;
