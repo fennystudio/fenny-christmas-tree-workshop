@@ -117,6 +117,37 @@
   }
   .video-cell video { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+  /* ============ 步驟輪播頁（給前方螢幕看） ============ */
+  .steps-loop .slide-inner { max-width: 1680px; }
+  .steps-loop h1.title { text-align: center; }
+  .steps-loop .subtitle { text-align: center; color: var(--ink-soft); }
+  .loop-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    gap: 14px; margin-top: 18px;
+  }
+  .loop-cell {
+    display: flex; flex-direction: column; background: var(--white-warm);
+    border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 6px 20px rgba(36, 83, 59, 0.10);
+    text-decoration: none; color: inherit; cursor: pointer;
+  }
+  .loop-cell .loop-head {
+    display: flex; align-items: center; gap: 8px; padding: 10px 12px;
+    background: var(--green); color: #fff; font-weight: 700;
+    font-size: clamp(14px, 1.5vh, 20px); letter-spacing: 1px;
+  }
+  .loop-cell .loop-badge {
+    width: 28px; height: 28px; border-radius: 50%; background: #fff;
+    color: var(--green-deep); display: flex; align-items: center; justify-content: center;
+    font-size: 15px; flex: 0 0 auto;
+  }
+  .loop-cell .loop-video {
+    position: relative; aspect-ratio: 9/16; background: #000;
+  }
+  .loop-cell .loop-video video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+
   /* ============ 四款聖誕樹 ============ */
   .tree-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 24px; }
   .tree-card {
@@ -297,6 +328,9 @@
     .qr-badge span { font-size: 10px; }
     .page-number { top: 14px; right: 16px; }
     .video-grid.col-5 { grid-template-columns: repeat(3, 1fr); }
+    .loop-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .loop-cell .loop-head { font-size: 12px; padding: 6px 8px; gap: 6px; }
+    .loop-cell .loop-badge { width: 22px; height: 22px; font-size: 12px; }
     .video-grid.col-4 { grid-template-columns: 1fr 1fr; }
     .cover .slide-inner { flex-direction: column; align-items: stretch; }
     .cover-grid { width: 100%; max-width: 300px; margin: 0 auto; gap: 8px; }
@@ -519,6 +553,43 @@
     </div>
   </section>
 
+
+  <!-- ========== 六步驟輪播（講解完畢後的前方螢幕畫面） ========== -->
+  <section class="slide steps-loop" data-id="steps-loop">
+    <div class="page-number"></div>
+    <div class="slide-inner">
+      <span class="chapter-tag">六步驟輪播</span>
+      <h1 class="title">🎄 聖誕樹六步驟</h1>
+      <h2 class="subtitle">看看你做到哪一步，點任一格看完整示範。</h2>
+      <div class="loop-grid">
+        <a class="loop-cell" href="#step-1" data-go="step-1">
+          <div class="loop-head"><span class="loop-badge">1</span><span>✂️ 剪下聖誕樹圓錐</span></div>
+          <div class="loop-video"><video src="steps/step1-cut-cone.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-2" data-go="step-2">
+          <div class="loop-head"><span class="loop-badge">2</span><span>🌲 製作聖誕樹葉片</span></div>
+          <div class="loop-video"><video src="steps/step2-fold-leaves.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-3" data-go="step-3">
+          <div class="loop-head"><span class="loop-badge">3</span><span>🌲 黏貼聖誕樹葉片</span></div>
+          <div class="loop-video"><video src="steps/step3-glue-leaves.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-4" data-go="step-4">
+          <div class="loop-head"><span class="loop-badge">4</span><span>🪵 纏繞樹幹</span></div>
+          <div class="loop-video"><video src="steps/step4-wrap-trunk.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-5" data-go="step-5">
+          <div class="loop-head"><span class="loop-badge">5</span><span>⭐ 固定聖誕樹</span></div>
+          <div class="loop-video"><video src="steps/step5-fix-tree.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-6" data-go="step-6">
+          <div class="loop-head"><span class="loop-badge">6</span><span>🎀 裝飾聖誕樹</span></div>
+          <div class="loop-video"><video src="steps/step6-decorate.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== 結尾 ========== -->
   <section class="slide final" data-id="end">
     <div class="page-number"></div>
@@ -653,15 +724,21 @@
     slides.forEach((slide, idx) => {
       slide.querySelectorAll('video').forEach(v => {
         const noAuto = v.classList.contains('no-autoplay');
-        if (idx === current && !noAuto) {
+        const loopGrid = v.classList.contains('loop-video-el');
+        if (idx === current && (!noAuto || loopGrid)) {
           v.play().catch(() => {});
         } else {
           v.pause();
-          if (!noAuto) { try { v.currentTime = 0; } catch (e) {} }
+          if (!noAuto && !loopGrid) { try { v.currentTime = 0; } catch (e) {} }
         }
       });
     });
   }
+
+  // 六步驟輪播頁的卡片：點任一格跳到該步驟頁
+  document.querySelectorAll('.loop-cell[data-go]').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); go(a.dataset.go); });
+  });
 
   function show(i) {
     current = Math.max(0, Math.min(total - 1, i));
