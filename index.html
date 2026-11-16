@@ -289,6 +289,16 @@
   .qr-overlay-text { font-size: clamp(18px, 3.6vh, 34px); font-weight: 700; color: var(--green-deep); letter-spacing: 2px; }
   .qr-overlay-hint { font-size: 13px; color: var(--ink-soft); letter-spacing: 1px; }
 
+  /* 通用圖片點擊放大 */
+  img.zoomable { cursor: zoom-in; }
+  .img-overlay {
+    position: fixed; inset: 0; z-index: 210; cursor: zoom-out;
+    background: rgba(20, 45, 32, 0.92);
+    display: flex; align-items: center; justify-content: center; padding: 3vh 16px;
+  }
+  .img-overlay[hidden] { display: none; }
+  .img-overlay img { max-width: 92vw; max-height: 92vh; width: auto; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); display: block; }
+
   /* 封面的大 QR（封面時左上小 QR 收起來，避免兩個） */
   .cover-qr {
     margin-top: 3vh; display: inline-flex; align-items: center; gap: 18px;
@@ -358,6 +368,9 @@
 </button>
 
 <!-- 點左上 QR 後的全螢幕放大版；點任意處或按 Esc 關閉 -->
+<div class="img-overlay" id="imgOverlay" role="dialog" aria-modal="true" aria-label="放大圖片" hidden>
+  <img id="imgOverlayImg" src="" alt="">
+</div>
 <div class="qr-overlay" id="qrOverlay" role="dialog" aria-modal="true" aria-label="簡報 QRcode" hidden>
   <div class="qr-overlay-card">
     <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
@@ -427,10 +440,10 @@
       <h1 class="title">毛根聖誕樹 🎄</h1>
       <h2 class="subtitle">同一個做法，不同繽紛的顏色，都很有聖誕氣息！</h2>
       <div class="tree-gallery">
-        <div class="tree-card"><img src="images/tree-gradient-green.webp" alt="漸層綠聖誕樹" loading="lazy"><div class="tree-label">漸層綠</div></div>
-        <div class="tree-card"><img src="images/tree-classic-green.webp" alt="經典綠聖誕樹" loading="lazy"><div class="tree-label">經典綠</div></div>
-        <div class="tree-card"><img src="images/tree-pink-purple.webp" alt="粉紫聖誕樹" loading="lazy"><div class="tree-label">粉紫</div></div>
-        <div class="tree-card"><img src="images/tree-rainbow.webp" alt="彩虹聖誕樹" loading="lazy"><div class="tree-label">彩虹</div></div>
+        <div class="tree-card"><img src="images/tree-gradient-green.png" alt="漸層綠聖誕樹" loading="lazy" class="zoomable"><div class="tree-label">漸層綠</div></div>
+        <div class="tree-card"><img src="images/tree-classic-green.png" alt="聖誕綠聖誕樹" loading="lazy" class="zoomable"><div class="tree-label">聖誕綠</div></div>
+        <div class="tree-card"><img src="images/tree-pink-purple.png" alt="粉紫聖誕樹" loading="lazy" class="zoomable"><div class="tree-label">粉紫</div></div>
+        <div class="tree-card"><img src="images/tree-rainbow.png" alt="彩虹聖誕樹" loading="lazy" class="zoomable"><div class="tree-label">彩虹</div></div>
       </div>
     </div>
   </section>
@@ -792,7 +805,22 @@
   document.getElementById('qrBadge').addEventListener('click', () => { qrOverlay.hidden = false; });
   qrOverlay.addEventListener('click', () => { qrOverlay.hidden = true; });
 
+  // 任何 .zoomable 圖點擊 → 全螢幕放大
+  const imgOverlay = document.getElementById('imgOverlay');
+  const imgOverlayImg = document.getElementById('imgOverlayImg');
+  const imgOpen = () => !imgOverlay.hidden;
+  document.querySelectorAll('img.zoomable').forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      imgOverlayImg.src = img.currentSrc || img.src;
+      imgOverlayImg.alt = img.alt || '';
+      imgOverlay.hidden = false;
+    });
+  });
+  imgOverlay.addEventListener('click', () => { imgOverlay.hidden = true; });
+
   document.addEventListener('keydown', (e) => {
+    if (imgOpen()) { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); imgOverlay.hidden = true; } return; }
     if (qrOpen()) { if (e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); qrOverlay.hidden = true; } return; }
     if (e.target.tagName === 'VIDEO') return;
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); show(current + 1); }
@@ -806,7 +834,7 @@
   document.addEventListener('touchend', (e) => {
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;
-    if (qrOpen()) return;
+    if (qrOpen() || imgOpen()) return;
     if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) show(current + (dx < 0 ? 1 : -1));
   });
 
