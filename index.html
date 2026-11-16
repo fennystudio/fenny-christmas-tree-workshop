@@ -680,16 +680,14 @@
       v.setAttribute('muted', '');
       v.playsInline = true;
       v.preload = 'metadata';
-      v.className = 'no-autoplay';
       v.src = src;
-      // 很短的片段（< 8 秒）像 GIF 一樣自動循環，不用學員按播放
+      // 很短的片段（< 8 秒）像 GIF 一樣自動循環、不顯示控制列；長片切到該頁也自動播放，但保留控制列
       v.addEventListener('loadedmetadata', () => {
         if (v.duration < 8) {
           v.loop = true;
           v.controls = false;
-          v.classList.remove('no-autoplay');
-          if (v.closest('.slide')?.classList.contains('active')) v.play().catch(() => {});
         }
+        if (v.closest('.slide')?.classList.contains('active')) v.play().catch(() => {});
       });
       return v;
     }
@@ -760,13 +758,12 @@
   function updateVideos() {
     slides.forEach((slide, idx) => {
       slide.querySelectorAll('video').forEach(v => {
-        const noAuto = v.classList.contains('no-autoplay');
         const loopGrid = v.classList.contains('loop-video-el');
-        if (idx === current && (!noAuto || loopGrid)) {
+        if (idx === current) {
           v.play().catch(() => {});
         } else {
           v.pause();
-          if (!noAuto && !loopGrid) { try { v.currentTime = 0; } catch (e) {} }
+          if (!loopGrid) { try { v.currentTime = 0; } catch (e) {} }
         }
       });
     });
