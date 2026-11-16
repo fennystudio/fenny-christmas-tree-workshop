@@ -291,6 +291,8 @@
 
   /* 通用圖片點擊放大 */
   img.zoomable { cursor: zoom-in; }
+  .bonus-extra-img { margin-top: 18px; display: flex; justify-content: center; }
+  .bonus-extra-img img { max-width: 100%; max-height: 32vh; border-radius: 12px; box-shadow: 0 6px 20px rgba(36, 83, 59, 0.14); }
   .img-overlay {
     position: fixed; inset: 0; z-index: 210; cursor: zoom-out;
     background: rgba(20, 45, 32, 0.92);
@@ -461,7 +463,7 @@
         <a class="step-card" href="#step-4"><span class="emoji">🪵</span><span><div class="step-no">步驟 4</div><div class="step-name">用吸管纏繞樹幹</div></span><span class="go">›</span></a>
         <a class="step-card" href="#step-5"><span class="emoji">⭐</span><span><div class="step-no">步驟 5</div><div class="step-name">固定聖誕樹</div></span><span class="go">›</span></a>
         <a class="step-card" href="#step-6"><span class="emoji">🎀</span><span><div class="step-no">步驟 6</div><div class="step-name">裝飾聖誕樹</div></span><span class="go">›</span></a>
-        <a class="step-card" href="#step-bonus" style="grid-column: 1 / -1;"><span class="emoji">⭐</span><span><div class="step-no">補充</div><div class="step-name">折星星（放樹頂）</div></span><span class="go">›</span></a>
+        <a class="step-card" href="#step-bonus" style="grid-column: 1 / -1;"><span class="emoji">⭐</span><span><div class="step-no">補充</div><div class="step-name">折星星、拐杖糖</div></span><span class="go">›</span></a>
       </div>
       <p class="tap-hint">👆 點任何一個步驟，就能看那一步的照片／影片</p>
     </div>
@@ -571,10 +573,14 @@
     <div class="slide-inner step-layout">
       <div class="step-media" data-step-media="7"></div>
       <div class="step-text">
-        <div class="step-head"><div class="step-badge">★</div><h1 class="title">⭐ 補充步驟：折星星</h1></div>
-        <ul class="step-list single">
-          <li>樹頂的小星星，用一根黃色毛根，每段 2 公分，折五個角。</li>
+        <div class="step-head"><div class="step-badge">★</div><h1 class="title">⭐ 補充步驟：折星星、拐杖糖</h1></div>
+        <ul class="step-list">
+          <li>樹頂的小星星：用一根黃色毛根，每段 2 公分，折五個角。</li>
+          <li>拐杖糖與花圈：取一根紅色與一根白色毛根，扭在一起形成紅白條紋，再彎成花圈或拐杖糖。</li>
         </ul>
+        <div class="bonus-extra-img">
+          <img src="images/bonus-candy-wreath.webp" alt="拐杖糖與花圈做法示意圖" class="zoomable" loading="lazy">
+        </div>
         <div class="step-nav"></div>
       </div>
     </div>
@@ -613,7 +619,7 @@
           <div class="loop-video"><video src="steps/step6-decorate.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-bonus" data-go="step-bonus">
-          <div class="loop-head"><span class="loop-badge">★</span><span>⭐ 補充·折星星</span></div>
+          <div class="loop-head"><span class="loop-badge">★</span><span>⭐ 補充·折星星、拐杖糖</span></div>
           <div class="loop-video"><video src="steps/step-bonus-star.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
         </a>
       </div>
