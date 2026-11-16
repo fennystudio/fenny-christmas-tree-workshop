@@ -122,8 +122,8 @@
   .steps-loop h1.title { text-align: center; }
   .steps-loop .subtitle { text-align: center; color: var(--ink-soft); }
   .loop-grid {
-    display: grid; grid-template-columns: repeat(6, 1fr);
-    gap: 14px; margin-top: 18px;
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    gap: 12px; margin-top: 18px;
   }
   .loop-cell {
     display: flex; flex-direction: column; background: var(--white-warm);
@@ -324,9 +324,7 @@
   }
   @media (max-width: 760px) {
     .slide { padding: 104px 16px 12vh; align-items: flex-start; }
-    .qr-badge { top: 10px; left: 10px; padding: 5px 5px 3px; }
-    .qr-badge img { width: 64px; height: 64px; }
-    .qr-badge span { font-size: 10px; }
+    .qr-badge { display: none !important; }
     .page-number { top: 14px; right: 16px; }
     .video-grid.col-5 { grid-template-columns: repeat(3, 1fr); }
     .loop-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -336,7 +334,6 @@
     .cover .slide-inner { flex-direction: column; align-items: stretch; }
     .cover-grid { width: 100%; max-width: 300px; margin: 0 auto; gap: 8px; }
     .cover-qr { display: none; }
-    body.on-cover .qr-badge { display: flex; }
     .steps-grid { grid-template-columns: 1fr; gap: 10px; }
     .step-card { padding: 14px 16px; }
     .step-layout { grid-template-columns: 1fr; gap: 20px; }
@@ -549,7 +546,7 @@
           <li>使用珍珠、聖誕小裝飾及蝴蝶結，自由裝飾聖誕樹。</li>
           <li>最後再繞上燈串。</li>
         </ol>
-        <div class="step-tip">想要更多顏色？ 可以到櫃子前方領取彩色毛球，讓聖誕樹更繽紛！</div>
+        <div class="step-tip">想要更多顏色裝飾？ 請到教室前方領取彩色毛球，讓聖誕樹更繽紛！</div>
         <div class="step-nav"></div>
       </div>
     </div>
@@ -564,7 +561,7 @@
       <div class="step-text">
         <div class="step-head"><div class="step-badge">★</div><h1 class="title">⭐ 補充步驟：折星星</h1></div>
         <ul class="step-list single">
-          <li>樹頂的小星星，用一根毛根就能折出來，跟著影片慢慢折。</li>
+          <li>樹頂的小星星，用一根黃色毛根，每段 2 公分，折五個角。</li>
         </ul>
         <div class="step-nav"></div>
       </div>
@@ -602,6 +599,10 @@
         <a class="loop-cell" href="#step-6" data-go="step-6">
           <div class="loop-head"><span class="loop-badge">6</span><span>🎀 裝飾聖誕樹</span></div>
           <div class="loop-video"><video src="steps/step6-decorate.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+        </a>
+        <a class="loop-cell" href="#step-bonus" data-go="step-bonus">
+          <div class="loop-head"><span class="loop-badge">★</span><span>⭐ 補充·折星星</span></div>
+          <div class="loop-video"><video src="steps/step-bonus-star.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
         </a>
       </div>
     </div>
