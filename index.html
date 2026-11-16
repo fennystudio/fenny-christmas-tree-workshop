@@ -301,15 +301,22 @@
   .img-overlay[hidden] { display: none; }
   .img-overlay img { max-width: 92vw; max-height: 92vh; width: auto; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); display: block; }
 
-  /* 封面的大 QR（封面時左上小 QR 收起來，避免兩個） */
+  /* 封面的 QR + 教學速覽影片 */
+  .cover-extras { margin-top: 3vh; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
   .cover-qr {
-    margin-top: 3vh; display: inline-flex; align-items: center; gap: 18px;
-    background: #fff; color: var(--green-deep); border-radius: 18px; padding: 12px 22px 12px 12px;
-    box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #fff; color: var(--green-deep); border-radius: 14px; padding: 8px 14px 8px 8px;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.22);
   }
-  .cover-qr img { width: clamp(150px, 30vh, 330px); height: auto; aspect-ratio: 1/1; display: block; }
-  .cover-qr-text { font-size: clamp(16px, 2.6vh, 26px); line-height: 1.6; letter-spacing: 2px; }
-  .cover-qr-text strong { display: block; font-size: 1.15em; }
+  .cover-qr img { width: clamp(72px, 12vh, 108px); height: auto; aspect-ratio: 1/1; display: block; }
+  .cover-qr-text { font-size: clamp(12px, 1.6vh, 16px); line-height: 1.4; letter-spacing: 1px; }
+  .cover-qr-text strong { display: block; font-size: 1.1em; }
+  .cover-video {
+    border-radius: 14px; overflow: hidden; background: #000;
+    width: clamp(120px, 20vh, 180px); aspect-ratio: 9/16; display: block;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.3);
+  }
+  .cover-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   body.on-cover .qr-badge { display: none; }
 
   /* ============ CONTROLS ============ */
@@ -393,9 +400,16 @@
         <div class="ribbon"></div>
         <h2 class="subtitle">今天，我們一起做一棵聖誕樹 🎄</h2>
         <div class="author">講者　Sally　莎莉老師</div>
-        <div class="cover-qr">
-          <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
-          <div class="cover-qr-text"><strong>手機掃 QRcode</strong>跟著每一步做</div>
+        <div class="cover-extras">
+          <div class="cover-qr">
+            <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
+            <div class="cover-qr-text"><strong>手機掃 QRcode</strong>跟著每一步做</div>
+          </div>
+          <div class="cover-video">
+            <video muted loop playsinline preload="metadata">
+              <source src="steps/cover-overview.mp4" type="video/mp4">
+            </video>
+          </div>
         </div>
       </div>
       <div class="cover-grid">
