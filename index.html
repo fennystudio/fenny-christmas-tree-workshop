@@ -353,8 +353,10 @@
     .loop-cell .loop-badge { width: 22px; height: 22px; font-size: 12px; }
     .video-grid.col-4 { grid-template-columns: 1fr 1fr; }
     .cover .slide-inner { flex-direction: column; align-items: stretch; }
-    .cover-grid { width: 100%; max-width: 300px; margin: 0 auto; gap: 8px; }
+    .cover-grid { display: none; }
     .cover-qr { display: none; }
+    .cover-extras { justify-content: center; }
+    .cover-video { width: min(72vw, 46vh); }
     .steps-grid { grid-template-columns: 1fr; gap: 10px; }
     .step-card { padding: 14px 16px; }
     .step-layout { grid-template-columns: 1fr; gap: 20px; }
@@ -408,7 +410,7 @@
             <div class="cover-qr-text"><strong>手機掃 QRcode</strong>跟著每一步做</div>
           </div>
           <div class="cover-video">
-            <video muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="none">
               <source src="steps/cover-overview.mp4" type="video/mp4">
             </video>
           </div>
@@ -431,21 +433,21 @@
       <h1 class="title">一根毛根，能變成什麼樣子？</h1>
       <h2 class="subtitle">同一根材料，可以變出很多樣子。</h2>
       <div class="video-grid col-5 compact">
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/5.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/6.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/7.MOV" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/8.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/9.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/10.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/13.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/15.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/16.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/17.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/1-20/18.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0043.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0094.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_0628.mov" type="video/mp4"></video></div>
-        <div class="video-cell"><video muted loop playsinline preload="metadata"><source src="精選/IMG_1099.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/5.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/6.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/7.MOV" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/8.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/9.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/10.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/13.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/15.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/16.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/17.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/1-20/18.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/IMG_0043.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/IMG_0094.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/IMG_0628.mov" type="video/mp4"></video></div>
+        <div class="video-cell"><video muted loop playsinline preload="none"><source src="精選/IMG_1099.mov" type="video/mp4"></video></div>
       </div>
     </div>
   </section>
@@ -614,31 +616,31 @@
       <div class="loop-grid">
         <a class="loop-cell" href="#step-1" data-go="step-1">
           <div class="loop-head"><span class="loop-badge">1</span><span>✂️ 剪下聖誕樹圓錐</span></div>
-          <div class="loop-video"><video src="steps/step1-cut-cone.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step1-cut-cone.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-2" data-go="step-2">
           <div class="loop-head"><span class="loop-badge">2</span><span>🌲 製作聖誕樹葉片</span></div>
-          <div class="loop-video"><video src="steps/step2-fold-leaves.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step2-fold-leaves.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-3" data-go="step-3">
           <div class="loop-head"><span class="loop-badge">3</span><span>🌲 黏貼聖誕樹葉片</span></div>
-          <div class="loop-video"><video src="steps/step3-glue-leaves.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step3-glue-leaves.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-4" data-go="step-4">
           <div class="loop-head"><span class="loop-badge">4</span><span>🪵 用吸管纏繞樹幹</span></div>
-          <div class="loop-video"><video src="steps/step4-wrap-trunk.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step4-wrap-trunk.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-5" data-go="step-5">
           <div class="loop-head"><span class="loop-badge">5</span><span>⭐ 固定聖誕樹</span></div>
-          <div class="loop-video"><video src="steps/step5-fix-tree.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step5-fix-tree.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-6" data-go="step-6">
           <div class="loop-head"><span class="loop-badge">6</span><span>🎀 裝飾聖誕樹</span></div>
-          <div class="loop-video"><video src="steps/step6-decorate.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step6-decorate.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
         <a class="loop-cell" href="#step-bonus" data-go="step-bonus">
           <div class="loop-head"><span class="loop-badge">★</span><span>⭐ 補充·折星星、拐杖糖</span></div>
-          <div class="loop-video"><video src="steps/step-bonus-star.mp4" muted loop playsinline preload="metadata" class="loop-video-el"></video></div>
+          <div class="loop-video"><video src="steps/step-bonus-star.mp4" muted loop playsinline preload="none" class="loop-video-el"></video></div>
         </a>
       </div>
     </div>
@@ -697,7 +699,7 @@
       v.defaultMuted = true;
       v.setAttribute('muted', '');
       v.playsInline = true;
-      v.preload = 'metadata';
+      v.preload = 'none';
       v.src = src;
       // 很短的片段（< 8 秒）像 GIF 一樣自動循環、不顯示控制列；長片切到該頁也自動播放，但保留控制列
       v.addEventListener('loadedmetadata', () => {
