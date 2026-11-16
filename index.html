@@ -86,16 +86,24 @@
 
   /* ============ COVER ============ */
   .cover { background: linear-gradient(135deg, #3E7B5A 0%, #1F4733 100%); color: #fff; }
-  .cover .slide-inner { display: flex; align-items: center; gap: 5vw; flex-wrap: wrap; }
+  .cover .slide-inner { display: flex; flex-direction: column; gap: 2.4vh; }
+  .cover-top { display: flex; align-items: center; gap: 4vw; flex-wrap: wrap; }
   .cover-text { flex: 1 1 360px; }
-  .cover-grid {
+  .cover-hero-video {
     flex: 0 0 auto;
-    width: min(440px, 48vh);
-    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    width: clamp(240px, 28vh, 360px); aspect-ratio: 9/16;
+    border-radius: 18px; overflow: hidden; background: #000;
+    box-shadow: 0 16px 42px rgba(0,0,0,0.35);
+  }
+  .cover-hero-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .cover-grid {
+    width: 100%;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
   }
   .cover-grid img {
     width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block;
-    border-radius: 16px; box-shadow: 0 12px 34px rgba(0,0,0,0.25);
+    border-radius: 14px; box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+    max-height: 26vh;
   }
   .cover .chapter-tag { background: rgba(255,255,255,0.18); color: #fff; }
   .cover h1.title { color: #fff; font-size: clamp(36px, 5.4vw, 64px); }
@@ -303,22 +311,15 @@
   .img-overlay[hidden] { display: none; }
   .img-overlay img { max-width: 92vw; max-height: 92vh; width: auto; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.4); display: block; }
 
-  /* 封面的 QR + 教學速覽影片 */
-  .cover-extras { margin-top: 3vh; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+  /* 封面上的小 QR 卡 */
   .cover-qr {
-    display: inline-flex; align-items: center; gap: 10px;
+    margin-top: 2.4vh; display: inline-flex; align-items: center; gap: 10px;
     background: #fff; color: var(--green-deep); border-radius: 14px; padding: 8px 14px 8px 8px;
     box-shadow: 0 10px 28px rgba(0,0,0,0.22);
   }
   .cover-qr img { width: clamp(72px, 12vh, 108px); height: auto; aspect-ratio: 1/1; display: block; }
   .cover-qr-text { font-size: clamp(12px, 1.6vh, 16px); line-height: 1.4; letter-spacing: 1px; }
   .cover-qr-text strong { display: block; font-size: 1.1em; }
-  .cover-video {
-    border-radius: 14px; overflow: hidden; background: #000;
-    width: clamp(120px, 20vh, 180px); aspect-ratio: 9/16; display: block;
-    box-shadow: 0 10px 28px rgba(0,0,0,0.3);
-  }
-  .cover-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
   body.on-cover .qr-badge { display: none; }
 
   /* ============ CONTROLS ============ */
@@ -352,11 +353,11 @@
     .loop-cell .loop-head { font-size: 12px; padding: 6px 8px; gap: 6px; }
     .loop-cell .loop-badge { width: 22px; height: 22px; font-size: 12px; }
     .video-grid.col-4 { grid-template-columns: 1fr 1fr; }
-    .cover .slide-inner { flex-direction: column; align-items: stretch; }
+    .cover .slide-inner { align-items: stretch; }
+    .cover-top { flex-direction: column; align-items: center; gap: 2vh; }
     .cover-grid { display: none; }
     .cover-qr { display: none; }
-    .cover-extras { justify-content: center; }
-    .cover-video { width: min(72vw, 46vh); }
+    .cover-hero-video { width: min(72vw, 46vh); }
     .steps-grid { grid-template-columns: 1fr; gap: 10px; }
     .step-card { padding: 14px 16px; }
     .step-layout { grid-template-columns: 1fr; gap: 20px; }
@@ -398,22 +399,22 @@
   <section class="slide cover active" data-id="cover">
     <div class="page-number"></div>
     <div class="slide-inner">
-      <div class="cover-text">
-        <span class="chapter-tag">FENNY STUDIO ✕ CHRISTMAS WORKSHOP</span>
-        <h1 class="title">毛根聖誕樹<br>DIY 手作</h1>
-        <div class="ribbon"></div>
-        <h2 class="subtitle">今天，我們一起做一棵聖誕樹 🎄</h2>
-        <div class="author">講者　Sally　莎莉老師</div>
-        <div class="cover-extras">
+      <div class="cover-top">
+        <div class="cover-text">
+          <span class="chapter-tag">FENNY STUDIO ✕ CHRISTMAS WORKSHOP</span>
+          <h1 class="title">毛根聖誕樹<br>DIY 手作</h1>
+          <div class="ribbon"></div>
+          <h2 class="subtitle">今天，我們一起做一棵聖誕樹 🎄</h2>
+          <div class="author">講者　Sally　莎莉老師</div>
           <div class="cover-qr">
             <img src="images/qr-deck.svg" alt="掃描開啟這份簡報">
             <div class="cover-qr-text"><strong>手機掃 QRcode</strong>跟著每一步做</div>
           </div>
-          <div class="cover-video">
-            <video muted loop playsinline preload="none">
-              <source src="steps/cover-overview.mp4" type="video/mp4">
-            </video>
-          </div>
+        </div>
+        <div class="cover-hero-video">
+          <video muted loop playsinline preload="none">
+            <source src="steps/cover-overview.mp4" type="video/mp4">
+          </video>
         </div>
       </div>
       <div class="cover-grid">
